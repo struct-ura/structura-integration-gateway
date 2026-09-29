@@ -18,9 +18,9 @@ Administrators can configure custom JavaScript through the Nextcloud administrat
 Make sure the configured code is valid JavaScript and behaves correctly on all authenticated pages where it runs.
 	]]></description>
 
-	<version>2.1.0</version>
+	<version>1.0.0</version>
 	<licence>AGPL-3.0-or-later</licence>
-	<author>Morris Jobke</author>
+	<author>Structura</author>
 	<namespace>StructuraIntegrationGateway</namespace>
 	<category>tools</category>
 
