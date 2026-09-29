@@ -1,23 +1,23 @@
-# JavaScript loader app for Nextcloud
+# Structura Integration Gateway
 
-JSLoader gives administrators a simple way to inject custom JavaScript into every Nextcloud page from one central place.
-It is useful for site-wide analytics, lightweight integrations, custom tracking snippets, or small UI enhancements that should apply across the whole instance.
+Structura Integration Gateway is a lightweight Nextcloud app for centrally managed JavaScript integrations.
 
-Instead of modifying core files or managing separate app-specific scripts,
-you can maintain your JavaScript through the admin settings and keep the setup easy to review and update.
-The script is loaded automatically on page startup, so your code can hook into the browser after the page is ready.
+Administrators can configure custom JavaScript through the Nextcloud administration settings. Configured JavaScript is loaded only for authenticated Nextcloud users.
+
+The JavaScript is not injected on login or unauthenticated pages, and the JavaScript endpoint itself requires an authenticated Nextcloud session.
 
 ## How it works
-Your custom JS code will be loaded as:
 
-```js
-window.addEventListener('DOMContentLoaded', () => { /* YOUR_JS_CODE_HERE */ });
-```
+Custom JavaScript configured by an administrator is automatically loaded for signed-in users.
 
-Make sure the code you enter is valid JavaScript and behaves well on all pages where it will run.
+## Upstream
 
-![](https://github.com/nextcloud/jsloader/raw/refs/heads/master/screenshots/admin-settings.png)
+Structura Integration Gateway is based on the open-source Nextcloud JSLoader project:
 
-## Contribute
+https://github.com/nextcloud/jsloader
 
-All contributions are considered to be licensed under the "AGPLv3 or any later version".
+The project is maintained as an independent Structura fork while retaining the applicable original copyright and licensing information.
+
+## License
+
+AGPL-3.0-or-later. See the license files included in this repository.

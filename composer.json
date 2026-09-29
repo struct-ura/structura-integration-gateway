@@ -1,6 +1,6 @@
 {
-	"name": "nextcloud/jsloader",
-	"description": "jsloader",
+	"name": "struct-ura/structura-integration-gateway",
+	"description": "Structura Integration Gateway",
 	"license": "AGPL",
 	"config": {
 		"optimize-autoloader": true,
@@ -12,11 +12,11 @@
 		"allow-plugins": {
 			"bamarni/composer-bin-plugin": true
 		},
-		"autoloader-suffix": "JSLoader"
+		"autoloader-suffix": "StructuraIntegrationGateway"
 	},
 	"autoload": {
 		"psr-4": {
-			"OCA\\JSLoader\\": "./lib/"
+			"OCA\\StructuraIntegrationGateway\\": "./lib/"
 		}
 	},
 	"scripts": {

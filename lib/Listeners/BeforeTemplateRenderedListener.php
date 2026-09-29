@@ -7,16 +7,17 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-namespace OCA\JSLoader\Listeners;
+namespace OCA\StructuraIntegrationGateway\Listeners;
 
 use OC\Security\CSP\ContentSecurityPolicyNonceManager;
-use OCA\JSLoader\AppInfo\Application;
+use OCA\StructuraIntegrationGateway\AppInfo\Application;
 use OCP\AppFramework\Http\Events\BeforeLoginTemplateRenderedEvent;
 use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IAppConfig;
 use OCP\IURLGenerator;
+use OCP\IUserSession;
 use OCP\Util;
 
 /**
@@ -29,11 +30,16 @@ class BeforeTemplateRenderedListener implements IEventListener {
 	public function __construct(
 		private readonly IAppConfig $appConfig,
 		private readonly IURLGenerator $urlGenerator,
+		private readonly IUserSession $userSession,
 		private readonly ContentSecurityPolicyNonceManager $contentSecurityPolicyNonceManager,
 	) {
 	}
 
 	public function handle(Event $event): void {
+		if ($this->userSession->getUser() === null) {
+			return;
+		}
+
 		if (!($event instanceof BeforeTemplateRenderedEvent) && !($event instanceof BeforeLoginTemplateRenderedEvent)) {
 			return;
 		}
@@ -43,7 +49,7 @@ class BeforeTemplateRenderedListener implements IEventListener {
 			return;
 		}
 
-		$linkToJs = $this->urlGenerator->linkToRoute('jsloader.JS.script', [
+		$linkToJs = $this->urlGenerator->linkToRoute('structura_integration_gateway.JS.script', [
 			'v' => $this->appConfig->getValueString(Application::APP_ID, 'cachebuster', '0'),
 		]);
 

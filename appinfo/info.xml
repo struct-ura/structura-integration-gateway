@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-	<id>jsloader</id>
-	<name>JSLoader</name>
-	<summary>Load custom JavaScript on all Nextcloud pages</summary>
+	<id>structura_integration_gateway</id>
+	<name>Structura Integration Gateway</name>
+	<summary>Load custom JavaScript for authenticated Nextcloud users</summary>
 	<description><![CDATA[
 ## **JSLoader**
 JSLoader gives administrators a simple way to inject custom JavaScript into every Nextcloud page from one central place.
@@ -26,12 +26,12 @@ Make sure the code you enter is valid JavaScript and behaves well on all pages w
 	<version>2.1.0</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author>Morris Jobke</author>
-	<namespace>JSLoader</namespace>
+	<namespace>StructuraIntegrationGateway</namespace>
 	<category>tools</category>
 
-	<website>https://github.com/nextcloud/jsloader/</website>
-	<bugs>https://github.com/nextcloud/jsloader/issues</bugs>
-	<repository type="git">https://github.com/nextcloud/jsloader.git</repository>
+	<website>https://github.com/struct-ura/structura-integration-gateway</website>
+	<bugs>https://github.com/struct-ura/structura-integration-gateway/issues</bugs>
+	<repository type="git">https://github.com/struct-ura/structura-integration-gateway.git</repository>
 	<screenshot>https://github.com/nextcloud/jsloader/raw/refs/heads/master/screenshots/admin-settings.png</screenshot>
 
 	<dependencies>
@@ -39,7 +39,7 @@ Make sure the code you enter is valid JavaScript and behaves well on all pages w
 	</dependencies>
 
 	<settings>
-		<admin>OCA\JSLoader\Settings\Admin</admin>
-		<admin-section>OCA\JSLoader\Settings\Section</admin-section>
+		<admin>OCA\StructuraIntegrationGateway\Settings\Admin</admin>
+		<admin-section>OCA\StructuraIntegrationGateway\Settings\Section</admin-section>
 	</settings>
 </info>

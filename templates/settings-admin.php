@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-use OCA\JSLoader\AppInfo\Application;
+use OCA\StructuraIntegrationGateway\AppInfo\Application;
 use OCP\Util;
 
 /** @var array $_ */

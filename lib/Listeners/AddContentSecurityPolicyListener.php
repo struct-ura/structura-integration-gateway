@@ -7,9 +7,9 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-namespace OCA\JSLoader\Listeners;
+namespace OCA\StructuraIntegrationGateway\Listeners;
 
-use OCA\JSLoader\AppInfo\Application;
+use OCA\StructuraIntegrationGateway\AppInfo\Application;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;

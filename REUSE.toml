@@ -1,9 +1,9 @@
 # SPDX-FileCopyrightText: 2024 Nextcloud GmbH and Nextcloud contributors
 # SPDX-License-Identifier: AGPL-3.0-or-later
 version = 1
-SPDX-PackageName = "jsloader"
-SPDX-PackageSupplier = "Nextcloud <info@nextcloud.com>"
-SPDX-PackageDownloadLocation = "https://github.com/nextcloud/jsloader"
+SPDX-PackageName = "structura-integration-gateway"
+SPDX-PackageSupplier = "Structura"
+SPDX-PackageDownloadLocation = "https://github.com/struct-ura/structura-integration-gateway"
 
 [[annotations]]
 path = ["l10n/**.js", "l10n/**.json"]

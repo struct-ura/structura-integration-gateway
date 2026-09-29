@@ -66,18 +66,18 @@ export async function onSave(event) {
 		textareaElement.disabled = true
 		urlInputElement.disabled = true
 
-		await new Promise((success, error) => OCP.AppConfig.setValue('jsloader', 'snippet', snippetValue, { success, error }))
+		await new Promise((success, error) => OCP.AppConfig.setValue('structura_integration_gateway', 'snippet', snippetValue, { success, error }))
 		textareaElement.disabled = false
 
-		await new Promise((success, error) => OCP.AppConfig.setValue('jsloader', 'url', urlValue, { success, error }))
+		await new Promise((success, error) => OCP.AppConfig.setValue('structura_integration_gateway', 'url', urlValue, { success, error }))
 		urlInputElement.disabled = false
 		showSuccess()
 
 		const cacheBuster = String(Number.parseInt(formElement.dataset.cachebuster) + 1)
-		await new Promise((success, error) => OCP.AppConfig.setValue('jsloader', 'cachebuster', cacheBuster, { success, error }))
+		await new Promise((success, error) => OCP.AppConfig.setValue('structura_integration_gateway', 'cachebuster', cacheBuster, { success, error }))
 		formElement.dataset.cachebuster = cacheBuster
 	} catch (error) {
-		console.error('[jsloader] Failed to save the configuration', error)
+		console.error('[structura_integration_gateway] Failed to save the configuration', error)
 		showError()
 	} finally {
 		textareaElement.disabled = false

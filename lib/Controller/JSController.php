@@ -7,9 +7,9 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-namespace OCA\JSLoader\Controller;
+namespace OCA\StructuraIntegrationGateway\Controller;
 
-use OCA\JSLoader\AppInfo\Application;
+use OCA\StructuraIntegrationGateway\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\AppFramework\Http\Response;
@@ -27,7 +27,6 @@ class JSController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * @PublicPage
 	 *
 	 * @return Response
 	 */
