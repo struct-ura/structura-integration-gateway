@@ -11,7 +11,6 @@ namespace OCA\StructuraIntegrationGateway\Listeners;
 
 use OC\Security\CSP\ContentSecurityPolicyNonceManager;
 use OCA\StructuraIntegrationGateway\AppInfo\Application;
-use OCP\AppFramework\Http\Events\BeforeLoginTemplateRenderedEvent;
 use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
@@ -23,7 +22,7 @@ use OCP\Util;
 /**
  * Listener to add the configured domain to the Content Security Policy to allow loading JS from there.
  *
- * @template-implements IEventListener<BeforeTemplateRenderedEvent|BeforeLoginTemplateRenderedEvent>
+ * @template-implements IEventListener<BeforeTemplateRenderedEvent>
  */
 class BeforeTemplateRenderedListener implements IEventListener {
 
@@ -40,7 +39,8 @@ class BeforeTemplateRenderedListener implements IEventListener {
 			return;
 		}
 
-		if (!($event instanceof BeforeTemplateRenderedEvent) && !($event instanceof BeforeLoginTemplateRenderedEvent)) {
+		if (!$event instanceof BeforeTemplateRenderedEvent) {
+
 			return;
 		}
 

@@ -13,6 +13,7 @@ use OCA\StructuraIntegrationGateway\AppInfo\Application;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
+use OCP\IUserSession;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 
 /**
@@ -24,11 +25,16 @@ class AddContentSecurityPolicyListener implements IEventListener {
 
 	public function __construct(
 		private readonly \OCP\IAppConfig $appConfig,
+		private readonly IUserSession $userSession,
 	) {
 	}
 
 	public function handle(Event $event): void {
 		if (!$event instanceof AddContentSecurityPolicyEvent) {
+			return;
+		}
+
+		if ($this->userSession->getUser() === null) {
 			return;
 		}
 
