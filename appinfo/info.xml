@@ -3,19 +3,20 @@
 	xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>structura_integration_gateway</id>
 	<name>Structura Integration Gateway</name>
-	<summary>Load custom JavaScript for authenticated Nextcloud users</summary>
+	<summary>Centrally manage JavaScript integrations for authenticated Nextcloud users</summary>
 	<description><![CDATA[
 ## **Structura Integration Gateway**
 
-Structura Integration Gateway provides administrators with a simple way to centrally manage custom JavaScript integrations in Nextcloud.
+Structura Integration Gateway provides a secure and lightweight way to centrally manage custom JavaScript integrations in Nextcloud.
 
-Configured JavaScript is loaded only for authenticated Nextcloud users. It is not injected on login or unauthenticated pages.
+Administrators can configure JavaScript through the Nextcloud administration settings. Configured integrations are loaded automatically for authenticated users while remaining disabled on login and unauthenticated pages.
 
-### How it works
+### Key features
 
-Administrators can configure custom JavaScript through the Nextcloud administration settings. The configured script is automatically loaded after an authenticated Nextcloud page starts.
-
-Make sure the configured code is valid JavaScript and behaves correctly on all authenticated pages where it runs.
+- Central management through Nextcloud administration settings
+- Available only to authenticated Nextcloud users
+- No JavaScript injection on login or public pages
+- Lightweight integration without additional background services
 	]]></description>
 
 	<version>1.0.0</version>
