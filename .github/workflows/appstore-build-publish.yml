@@ -12,6 +12,11 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      version:
+        description: Release tag
+        required: true
+        default: v1.0.0
 
 permissions:
   contents: write
@@ -31,7 +36,11 @@ jobs:
         run: |
           # Split and keep last
           echo "APP_NAME=structura_integration_gateway" >> $GITHUB_ENV
-          echo "APP_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "APP_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          else
+            echo "APP_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          fi
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
