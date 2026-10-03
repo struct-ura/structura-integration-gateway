@@ -36,3 +36,5 @@ jobs:
           fi
 
           echo "No new upstream commits."
+          echo "::error::TEST: Upstream update notification"
+          exit 1
