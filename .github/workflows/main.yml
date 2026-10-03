@@ -1,4 +1,4 @@
-name: Check JSLoader upstream
+name: Original JSLoader update detected - review required
 
 on:
   schedule:
