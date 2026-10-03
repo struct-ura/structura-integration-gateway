@@ -1,0 +1,38 @@
+name: Check JSLoader upstream
+
+on:
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Fetch Nextcloud JSLoader
+        run: |
+          git remote add upstream https://github.com/nextcloud/jsloader.git
+          git fetch upstream master
+
+      - name: Check for upstream updates
+        run: |
+          NEW_COMMITS=$(git rev-list --count HEAD..upstream/master)
+
+          if [ "$NEW_COMMITS" -gt 0 ]; then
+            echo "::error::$NEW_COMMITS new commit(s) detected in nextcloud/jsloader"
+            echo "New upstream commits:"
+            git log --oneline HEAD..upstream/master
+            exit 1
+          fi
+
+          echo "No new upstream commits."
