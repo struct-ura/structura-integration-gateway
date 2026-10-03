@@ -19,10 +19,10 @@ Util::addStyle(Application::APP_ID, 'admin');
 		<?php p($l->t('Paste the JS code snippet here. It will be loaded on every page.')); ?>
 	</label>
 	<textarea id="jsloader-snippet"><?php print_unescaped($_['snippet']); ?></textarea>
-	<label for="jsloader-url"><?php p($l->t('Domain where external JavaScript is loaded from.')); ?></label>
-	<input id="jsloader-url" aria-describedby="jsloader-url-hint" name="jsloader-url" type="url" value="<?php print_unescaped($_['url']); ?>">
+	<label for="jsloader-url"><?php p($l->t('Domains where external JavaScript is loaded from.')); ?></label>
+	<textarea id="jsloader-url" aria-describedby="jsloader-url-hint" name="jsloader-url"><?php print_unescaped($_['url']); ?></textarea>
 	<div id="jsloader-url-hint" class="hint">
-		<?php p($l->t('This is needed to work with the CSP policy that is in place. It is tried to automatically detect this based on the snippet above if empty.')); ?>
+		<?php p($l->t('Enter one URL per line. These domains are added to the Content Security Policy.')); ?>
 	</div>
 	<button id="jsloader-save" class="btn btn-primary" disabled="disabled" type="submit"><?php p($l->t('Save')); ?></button>
 	<span id="jsloader-message" class="msg"></span>

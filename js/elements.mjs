@@ -9,7 +9,7 @@
 export const formElement = getElementById('jsloader-form')
 
 /**
- * @type {HTMLInputElement}
+ * @type {HTMLTextAreaElement}
  */
 export const urlInputElement = getElementById('jsloader-url')
 

@@ -17,7 +17,7 @@ const URL_REGEX = /https?:\/\/([^\/]+)/
 export function onSnippetChange() {
 	saveButtonElement.disabled = false
 
-	if (urlInputElement.value === '' || !urlInputElement.validity.valid) {
+	if (urlInputElement.value === '') {
 		const match = URL_REGEX.exec(textareaElement.value)
 		if (match !== null) {
 			urlInputElement.value = match[1]
@@ -34,14 +34,23 @@ export function onSnippetChange() {
 export function onUrlChange() {
 	urlInputElement.setCustomValidity('')
 
-	if (urlInputElement.value !== '' && urlInputElement.checkValidity?.() !== false) {
+	const urls = urlInputElement.value
+		.split(/\r?\n/)
+		.map((url) => url.trim())
+		.filter(Boolean)
+
+	for (const url of urls) {
 		try {
-			// some browsers do not properly validate the URL, so re-do it manually
-			new URL(urlInputElement.value)
+			const parsedUrl = new URL(url)
+			if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+				throw new Error('Unsupported protocol')
+			}
 		} catch {
-			urlInputElement.setCustomValidity('Invalid URL')
+			urlInputElement.setCustomValidity(`Invalid URL: ${url}`)
+			break
 		}
 	}
+
 	saveButtonElement.disabled = false
 	urlInputElement.reportValidity()
 }
@@ -57,7 +66,8 @@ export async function onSave(event) {
 	const urlValue = urlInputElement.value
 	const snippetValue = textareaElement.value
 
-	if (urlValue !== '' && !urlInputElement.checkValidity()) {
+	onUrlChange()
+	if (!urlInputElement.checkValidity()) {
 		urlInputElement.reportValidity()
 		return
 	}

@@ -38,13 +38,26 @@ class AddContentSecurityPolicyListener implements IEventListener {
 			return;
 		}
 
-		// whitelist the URL to allow loading JS from this external domain
-		$url = $this->appConfig->getValueString(Application::APP_ID, 'url');
-		if ($url !== '') {
-			$policy = new ContentSecurityPolicy();
+		// Whitelist the configured URLs to allow loading external resources.
+		$configuredUrls = $this->appConfig->getValueString(Application::APP_ID, 'url');
+		$urls = preg_split('/\\R/', $configuredUrls) ?: [];
+
+		$policy = new ContentSecurityPolicy();
+		$hasUrls = false;
+
+		foreach ($urls as $url) {
+			$url = trim($url);
+			if ($url === '') {
+				continue;
+			}
+
 			$policy->addAllowedScriptDomain($url);
 			$policy->addAllowedImageDomain($url);
 			$policy->addAllowedConnectDomain($url);
+			$hasUrls = true;
+		}
+
+		if ($hasUrls) {
 			$event->addPolicy($policy);
 		}
 	}
