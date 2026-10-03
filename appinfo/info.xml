@@ -19,7 +19,7 @@ Administrators can configure JavaScript through the Nextcloud administration set
 - Lightweight integration without additional background services
 	]]></description>
 
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author>Structura</author>
 	<namespace>StructuraIntegrationGateway</namespace>
