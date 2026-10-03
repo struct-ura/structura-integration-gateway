@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Structura
+# SPDX-License-Identifier: MIT
+
 name: Original JSLoader update detected - review required
 
 on:
