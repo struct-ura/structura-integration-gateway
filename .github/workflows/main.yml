@@ -1,41 +1,113 @@
 # SPDX-FileCopyrightText: 2026 Structura
 # SPDX-License-Identifier: MIT
 
-name: Original JSLoader update detected - review required
+name: JSLoader App Store Update Monitor
 
 on:
   schedule:
-    - cron: '17 7 * * *'
+    - cron: '0 8 * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
-  check-upstream:
+  check-appstore:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout master
-        uses: actions/checkout@v4
+      - name: Check published JSLoader version
+        uses: actions/github-script@v7
         with:
-          ref: master
-          fetch-depth: 0
+          script: |
+            const currentVersion = '2.1.0';
 
-      - name: Fetch Nextcloud JSLoader
-        run: |
-          git remote add upstream https://github.com/nextcloud/jsloader.git
-          git fetch upstream master
+            const response = await fetch(
+              'https://apps.nextcloud.com/api/v1/apps.json'
+            );
 
-      - name: Check for upstream updates
-        run: |
-          NEW_COMMITS=$(git rev-list --count HEAD..upstream/master)
+            if (!response.ok) {
+              throw new Error(`App Store API: HTTP ${response.status}`);
+            }
 
-          if [ "$NEW_COMMITS" -gt 0 ]; then
-            echo "::error::$NEW_COMMITS new commit(s) detected in nextcloud/jsloader"
-            echo "New upstream commits:"
-            git log --oneline HEAD..upstream/master
-            exit 1
-          fi
+            const apps = await response.json();
+            const app = apps.find(item => item.id === 'jsloader');
 
-          echo "No new upstream commits."
+            if (!app) {
+              throw new Error('JSLoader not found in App Store');
+            }
+
+            const versions = (app.releases || [])
+              .filter(release => !release.isNightly)
+              .map(release => release.version)
+              .filter(version => /^\d+\.\d+\.\d+$/.test(version));
+
+            if (!versions.length) {
+              throw new Error('No stable JSLoader releases found');
+            }
+
+            const compare = (a, b) => {
+              const left = a.split('.').map(Number);
+              const right = b.split('.').map(Number);
+
+              for (let i = 0; i < 3; i++) {
+                if (left[i] !== right[i]) {
+                  return left[i] - right[i];
+                }
+              }
+
+              return 0;
+            };
+
+            versions.sort(compare);
+
+            const latestVersion = versions[versions.length - 1];
+
+            core.info(`Current baseline: ${currentVersion}`);
+            core.info(`Latest App Store version: ${latestVersion}`);
+
+            if (compare(latestVersion, currentVersion) <= 0) {
+              core.info('No new JSLoader release.');
+              return;
+            }
+
+            const title = `JSLoader App Store Update: ${latestVersion}`;
+
+            const issues = await github.paginate(
+              github.rest.issues.listForRepo,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'all',
+                per_page: 100
+              }
+            );
+
+            if (issues.some(issue => issue.title === title)) {
+              core.info('Update already reported.');
+              return;
+            }
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body: [
+                '@struct-ura',
+                '',
+                'A new JSLoader version has been published.',
+                '',
+                `Previous baseline: ${currentVersion}`,
+                `Latest version: ${latestVersion}`,
+                '',
+                'App Store:',
+                'https://apps.nextcloud.com/apps/jsloader/releases',
+                '',
+                'Review the changes before updating Structura Integration Gateway.',
+                '',
+                'No automatic updates have been performed.'
+              ].join('\n')
+            });
+
+            core.info(`Created notification for ${latestVersion}`);
